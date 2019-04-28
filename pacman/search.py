@@ -111,8 +111,8 @@ def depthFirstSearch(problem):
             for node in frontier:
 
                 if node not in visited:
-                        visited.append(node)
-                        stack.push(node[0])
+                    visited.append(node)
+                    stack.push(node[0])
 
     path = []
     for node in visited:
@@ -127,9 +127,34 @@ def breadthFirstSearch(problem):
     """
     Search the shallowest nodes in the search tree first.
     DICA: Utilizar util.PriorityQueue
-    *** YOUR CODE HERE ***
+    *** YOUR CODE
+    HERE ***
     """
-    util.raiseNotDefined()
+
+    visited = []
+    queue = util.Queue()
+    source = problem.getStartState()
+    queue.push(source)
+    while not problem.isGoalState(source):
+
+        source = queue.pop()
+        frontier = problem.getSuccessors(source)
+
+        print "{0} -> {1}".format(source, frontier)
+
+        if frontier is not None:
+            for node in frontier:
+
+                if node not in visited:
+                    visited.append(node)
+                    queue.push(node[0], node[2])
+
+    path = []
+    for node in visited:
+        path.append(node[1])
+
+    print path
+    return path
 
 
 def uniformCostSearch(problem):
@@ -150,7 +175,32 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    visited = []
+    queue = util.PriorityQueue()
+    source = problem.getStartState()
+    queue.push(source, 0)
+    while not problem.isGoalState(source):
+
+        source = queue.pop()
+        frontier = problem.getSuccessors(source)
+
+        print "{0} -> {1}".format(source, frontier)
+
+        if frontier is not None:
+            for node in frontier:
+
+                if node not in visited:
+                    visited.append(node)
+                    queue.push(node[0], node[2])
+
+    path = []
+    for node in visited:
+        path.append(node[1])
+
+    print path
+    return path
+
+  #  util.raiseNotDefined()
 
 
 # Abbreviations
