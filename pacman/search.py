@@ -94,34 +94,33 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
 
-      visited = []
+    cur_node = problem.getStartState()
     stack = util.Stack()
-    start = problem.getStartState()
-    frontier = problem.getSuccessors(start)
-    stack.push(frontier[len(frontier)-1])
-    source = start
-    path = []
 
-    while not problem.isGoalState(source[0]):
+    moves = []
+    visited = set()
 
-        source = stack.pop()
-        path.append(source[1])
-        frontier = problem.getSuccessors(source[0])
+    for el in problem.getSuccessors(cur_node):
+        stack.push(el)
 
-        print "{0} -> {1}".format(source, frontier)
+    while not problem.isGoalState(cur_node[0]) and not stack.isEmpty():
 
-        if frontier is not None:
-            for node in frontier:
+        cur_node = stack.pop()
 
-                if node[0] not in visited:
-                   # print node
-                    visited.append(node[0])
-                    stack.push(node)
+        visited.add(cur_node)
+        moves.append(cur_node[1])
 
+        new_frontier = problem.getSuccessors(cur_node[0])
 
-    print visited
-    print path
-    return path
+        print '{0} -> {1}'.format(cur_node, new_frontier)
+
+        for node in new_frontier:
+
+            if node not in visited:
+                stack.push(node)
+
+    print moves
+    return moves
     # util.raiseNotDefined()
 
 
@@ -132,38 +131,62 @@ def breadthFirstSearch(problem):
     *** YOUR CODE
     HERE ***
     """
-
-    visited = []
+    moves = []
+    visited = set()
     queue = util.Queue()
     source = problem.getStartState()
-    queue.push(source)
-    while not problem.isGoalState(source):
+
+    for node in problem.getSuccessors(source):
+        queue.push(node)
+
+    while not problem.isGoalState(source[0]) and not queue.isEmpty():
 
         source = queue.pop()
-        frontier = problem.getSuccessors(source)
+        visited.add(source)
+        moves.append(source[1])
+        frontier = problem.getSuccessors(source[0])
 
         print "{0} -> {1}".format(source, frontier)
 
-        if frontier is not None:
-            for node in frontier:
+        for node in frontier:
 
-                if node not in visited:
-                    visited.append(node)
-                    queue.push(node[0], node[2])
+            if node not in visited:
+                queue.push(node)
 
-    path = []
-    for node in visited:
-        path.append(node[1])
-
-    print path
-    return path
+    print moves
+    return moves
 
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first.
     *** YOUR CODE HERE ***
     """
-    util.raiseNotDefined()
+    moves = []
+    visited = set()
+    queue = util.PriorityQueue()
+    source = problem.getStartState()
+
+    for node in problem.getSuccessors(source):
+        queue.push(node, node[2])
+
+    while not problem.isGoalState(source[0]) and not queue.isEmpty():
+
+        source = queue.pop()
+        visited.add(source)
+        moves.append(source[1])
+        frontier = problem.getSuccessors(source[0])
+
+        print "{0} -> {1}".format(source, frontier)
+
+        for node in frontier:
+
+            if node not in visited:
+                queue.push(node, node[2])
+
+    print moves
+    return moves
+
+   # util.raiseNotDefined()
 
 
 def nullHeuristic(state, problem=None):
@@ -177,32 +200,33 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
-    visited = []
+    moves = []
+    visited = set()
     queue = util.PriorityQueue()
     source = problem.getStartState()
-    queue.push(source, 0)
-    while not problem.isGoalState(source):
+
+    for node in problem.getSuccessors(source):
+        queue.push(node, node[2])
+
+    while not problem.isGoalState(source[0]) and not queue.isEmpty():
 
         source = queue.pop()
-        frontier = problem.getSuccessors(source)
+        visited.add(source)
+        moves.append(source[1])
+        frontier = problem.getSuccessors(source[0])
 
         print "{0} -> {1}".format(source, frontier)
 
-        if frontier is not None:
-            for node in frontier:
+        for node in frontier:
 
-                if node not in visited:
-                    visited.append(node)
-                    queue.push(node[0], node[2])
+            if node not in visited:
+                queue.push(node, node[2])
 
-    path = []
-    for node in visited:
-        path.append(node[1])
+    print moves
+    return moves
 
-    print path
-    return path
 
-  #  util.raiseNotDefined()
+#  util.raiseNotDefined()
 
 
 # Abbreviations
