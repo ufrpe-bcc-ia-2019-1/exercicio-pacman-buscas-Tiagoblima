@@ -103,21 +103,22 @@ def depthFirstSearch(problem):
     for el in problem.getSuccessors(cur_node):
         stack.push(el)
 
-    while not problem.isGoalState(cur_node[0]) and not stack.isEmpty():
+       while not problem.isGoalState(cur_node[0]) and not stack.isEmpty():
 
         cur_node = stack.pop()
+        caminho =
 
-        visited.add(cur_node)
+
+        visited.add(cur_node[0])
         moves.append(cur_node[1])
+        sucessors = problem.getSuccessors(cur_node[0])
 
-        new_frontier = problem.getSuccessors(cur_node[0])
+        print '{0} -> {1}'.format(cur_node, sucessors)
 
-        print '{0} -> {1}'.format(cur_node, new_frontier)
+        for node in sucessors:
 
-        for node in new_frontier:
-
-            if node not in visited:
-                stack.push(node)
+            if node[0] not in visited:
+                stack.push((node, caminho+node))
 
     print moves
     return moves
