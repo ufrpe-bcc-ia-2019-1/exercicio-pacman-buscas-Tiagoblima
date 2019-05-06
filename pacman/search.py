@@ -94,6 +94,7 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
 
+    #guardar apenas nós do que deu certo
     cur_node = problem.getStartState()
     stack = util.Stack()
 
