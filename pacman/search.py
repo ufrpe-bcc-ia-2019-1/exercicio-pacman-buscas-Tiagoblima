@@ -101,28 +101,21 @@ def depthFirstSearch(problem):
     moves = []
     visited = set()
 
-    for el in problem.getSuccessors(cur_node):
-        stack.push(el)
+     while move is not None:
+                moves.append(move)
+                node = parent[position]
+                move = node[1]
+                position = node[0]
 
-       while not problem.isGoalState(cur_node[0]) and not stack.isEmpty():
+            print moves
+            return moves
 
-        cur_node = stack.pop()
-        caminho =
+        successors = problem.getSuccessors(cur_node[0])
 
+        for node in successors:
 
-        visited.add(cur_node[0])
-        moves.append(cur_node[1])
-        sucessors = problem.getSuccessors(cur_node[0])
-
-        print '{0} -> {1}'.format(cur_node, sucessors)
-
-        for node in sucessors:
-
-            if node[0] not in visited:
-                stack.push((node, caminho+node))
-
-    print moves
-    return moves
+            if node not in visited:
+                parent[node[0]] = cur_node
     # util.raiseNotDefined()
 
 
